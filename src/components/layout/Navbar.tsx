@@ -35,30 +35,30 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
   }, []);
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur-md sm:px-6">
+    <header className="shrink-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-6">
       {/* Left section: Hamburger & Title */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 min-w-0">
         <button
           onClick={onToggleSidebar}
-          className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 lg:hidden"
+          className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 lg:hidden cursor-pointer"
           title="Toggle Navigation Menu"
           aria-label="Toggle Navigation Menu"
         >
           <Menu className="h-5 w-5" />
         </button>
 
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-950 font-bold text-white shadow-xs">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-950 font-bold text-white shadow-xs">
             <span className="text-sm tracking-wider">RS</span>
           </div>
-          <div>
+          <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="text-base font-bold tracking-tight text-slate-900">RSMS Connect</span>
-              <span className="hidden rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 sm:inline-block">
+              <span className="text-base font-bold tracking-tight text-slate-900 shrink-0">RSMS Connect</span>
+              <span className="hidden rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 sm:inline-block shrink-0">
                 Autonomous Portal
               </span>
             </div>
-            <p className="hidden text-[11px] text-slate-500 sm:block">
+            <p className="hidden text-[11px] text-slate-500 xl:block truncate max-w-xs">
               Rajagiri School of Engineering & Technology (Autonomous)
             </p>
           </div>
@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
       </div>
 
       {/* Center/Right section: External Rexa Link, Quick Switcher, User Profile, Logout */}
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         {/* Quick Role / Student Switcher for seamless testing */}
         <div className="relative">
           <button

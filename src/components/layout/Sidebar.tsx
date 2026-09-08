@@ -93,12 +93,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar container */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-slate-200 bg-white transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-slate-200 bg-white transition-transform duration-200 ease-in-out lg:relative lg:inset-auto lg:z-auto lg:h-full lg:w-64 lg:shrink-0 lg:shadow-none ${
+          isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         {/* Mobile Header */}
-        <div className="flex h-16 items-center justify-between border-b border-slate-200 px-4 lg:hidden">
+        <div className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 px-4 lg:hidden">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded bg-indigo-900 font-bold text-white">
               <span className="text-xs">RS</span>
@@ -107,14 +107,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100"
+            className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100 cursor-pointer"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Section title */}
-        <div className="px-4 pt-4 pb-2">
+        <div className="px-4 pt-4 pb-2 shrink-0">
           <span className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
             {isStudent ? 'Student Portal' : 'Admin Management'}
           </span>
@@ -161,7 +161,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </nav>
 
         {/* Footer info & Logout */}
-        <div className="border-t border-slate-200 p-3">
+        <div className="border-t border-slate-200 p-3 shrink-0">
           <div className="mb-2 rounded-xl bg-slate-50 p-2.5 text-[11px] text-slate-500">
             <div className="font-semibold text-slate-700">Rajagiri RSMS Connect</div>
             <div className="mt-0.5 text-[10px] text-slate-500">
