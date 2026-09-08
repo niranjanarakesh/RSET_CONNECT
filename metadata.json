@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix RSMS Connect - Rajagiri Student Management System",
+  "description": "Rajagiri Student Management System (RSMS Connect) with high-performance CSV-driven persistent data storage, student portal, admin dashboard, Rexa end-semester exam results import, attendance calculator, and comprehensive academic modules.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
