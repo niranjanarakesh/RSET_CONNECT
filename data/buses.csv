@@ -1,0 +1,6 @@
+"id","bus_no","route_name","stops","current_stop","status","driver_name","driver_phone"
+"1","Bus 04","Route 1: Aluva - Kalamassery - Collectorate - RSET","Aluva Metro, Pulinchodu, Companypady, Kalamassery, Premier, Collectorate, Kakkanad, Rajagiri Campus","Collectorate Junction","On Time","Suresh Kumar","+91 94471 23456"
+"2","Bus 07","Route 2: Vytilla - Palarivattom - Padamugal - RSET","Vytilla Hub, Chakkaraparambu, Palarivattom Jn, Pipeline, Vazhakkala, Padamugal, Rajagiri Campus","Padamugal","At Stop","George K. A.","+91 94472 34567"
+"3","Bus 12","Route 3: Tripunithura - Hill Palace - Karingachira - RSET","Statue Jn, Tripunithura Bus Stand, Hill Palace, Karingachira, Irumpanam, Seaport-Airport Rd, RSET","Karingachira Jn","Delayed","Babu Joseph","+91 94473 45678"
+"4","Bus 15","Route 4: Angamaly - Athani - Aluva Bypass - RSET","Angamaly KSRTC, Telk, Athani, Desom, Aluva Bypass, HMT Jn, Rajagiri Campus","Departed Campus","Departed","Antony P.","+91 94474 56789"
+"5","Bus 18","Route 5: Paravur - Cherai Rd - Varapuzha - RSET","North Paravur, Koonammavu, Varapuzha Bridge, Cheranalloor, Edappally Toll, RSET","Depot Maintenance","Inactive","Manoj V.","+91 94475 67890"
