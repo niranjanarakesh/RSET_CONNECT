@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useAuth } from '../../context/AuthContext';
 import {
   LogOut,
@@ -6,8 +6,6 @@ import {
   Menu,
   ShieldCheck,
   GraduationCap,
-  ArrowLeftRight,
-  ChevronDown,
 } from 'lucide-react';
 import { StudentUser } from '../../types';
 
@@ -17,22 +15,11 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
-  const { user, role, logout, switchToStudent, switchToAdmin } = useAuth();
+  const { user, role, logout } = useAuth();
   const rexaUrl = import.meta.env.VITE_REXA_PORTAL_URL || 'https://student.rajagiritech.ac.in/';
-
-  const [studentsList, setStudentsList] = useState<StudentUser[]>([]);
-  const [showSwitchDropdown, setShowSwitchDropdown] = useState(false);
 
   const isStudent = role === 'student';
   const student = isStudent ? (user as StudentUser) : null;
-
-  useEffect(() => {
-    // Fetch students list for quick tester switcher
-    fetch('/api/students')
-      .then((res) => (res.ok ? res.json() : []))
-      .then((data) => setStudentsList(data))
-      .catch(() => {});
-  }, []);
 
   return (
     <header className="shrink-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-6">
@@ -65,79 +52,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
         </div>
       </div>
 
-      {/* Center/Right section: External Rexa Link, Quick Switcher, User Profile, Logout */}
+      {/* Center/Right section: External Rexa Link, User Profile, Logout */}
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-        {/* Quick Role / Student Switcher for seamless testing */}
-        <div className="relative">
-          <button
-            onClick={() => setShowSwitchDropdown((prev) => !prev)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100"
-            title="Quick Role / Student Switcher"
-          >
-            <ArrowLeftRight className="h-3.5 w-3.5 text-indigo-600" />
-            <span className="hidden sm:inline">Switch Role</span>
-            <ChevronDown className="h-3 w-3 text-slate-400" />
-          </button>
-
-          {showSwitchDropdown && (
-            <div className="absolute right-0 mt-2 w-64 rounded-xl border border-slate-200 bg-white p-2 shadow-xl z-50 text-xs">
-              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Switch Identity (Instant Demo)
-              </div>
-
-              {/* Admin Button */}
-              <button
-                onClick={() => {
-                  switchToAdmin();
-                  setShowSwitchDropdown(false);
-                }}
-                className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left transition-colors ${
-                  role === 'admin'
-                    ? 'bg-indigo-50 text-indigo-950 font-bold'
-                    : 'text-slate-700 hover:bg-slate-50'
-                }`}
-              >
-                <ShieldCheck className="h-4 w-4 text-indigo-700" />
-                <div className="flex-1">
-                  <div className="font-semibold">Academic Controller</div>
-                  <div className="text-[10px] text-slate-500">Admin Portal</div>
-                </div>
-              </button>
-
-              <div className="my-1 border-t border-slate-100" />
-
-              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Switch Enrolled Student
-              </div>
-
-              <div className="max-h-48 overflow-y-auto space-y-1">
-                {studentsList.map((st) => (
-                  <button
-                    key={st.uid}
-                    onClick={() => {
-                      switchToStudent(st.uid);
-                      setShowSwitchDropdown(false);
-                    }}
-                    className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left transition-colors ${
-                      student?.uid === st.uid
-                        ? 'bg-indigo-50 text-indigo-950 font-bold'
-                        : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    <GraduationCap className="h-3.5 w-3.5 text-indigo-600" />
-                    <div className="flex-1 truncate">
-                      <div className="truncate font-medium">{st.name}</div>
-                      <div className="text-[10px] text-slate-400 font-mono">
-                        {st.uid} • {st.class}
-                      </div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
         {/* Rexa Portal Link */}
         <a
           href={rexaUrl}
