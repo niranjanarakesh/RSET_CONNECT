@@ -135,10 +135,10 @@ const MainApp: React.FC = () => {
   };
 
   return (
-    <div className="h-screen h-[100dvh] w-full bg-slate-100 flex flex-col overflow-hidden">
+    <div className="h-screen h-[100dvh] w-full bg-slate-100 flex flex-col overflow-hidden print:h-auto print:overflow-visible print:bg-white">
       <Navbar onToggleSidebar={() => setSidebarOpen((prev) => !prev)} />
 
-      <div className="flex flex-1 min-h-0 min-w-0 w-full overflow-hidden relative">
+      <div className="flex flex-1 min-h-0 min-w-0 w-full overflow-hidden relative print:overflow-visible print:block">
         <Sidebar
           currentView={currentView}
           onSelectView={(view) => {
@@ -149,8 +149,8 @@ const MainApp: React.FC = () => {
           onClose={() => setSidebarOpen(false)}
         />
 
-        <main className="flex-1 min-w-0 min-h-0 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-7xl">{renderView()}</div>
+        <main className="flex-1 min-w-0 min-h-0 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8 print:p-0 print:overflow-visible">
+          <div className="mx-auto max-w-7xl print:max-w-none">{renderView()}</div>
         </main>
       </div>
     </div>

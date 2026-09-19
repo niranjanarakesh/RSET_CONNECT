@@ -22,7 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
   const student = isStudent ? (user as StudentUser) : null;
 
   return (
-    <header className="shrink-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-6">
+    <header className="shrink-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-6 print:hidden">
       {/* Left section: Hamburger & Title */}
       <div className="flex items-center gap-3 min-w-0">
         <button

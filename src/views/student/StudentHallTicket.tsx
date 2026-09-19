@@ -32,6 +32,7 @@ export const StudentHallTicket: React.FC = () => {
   }, [student?.uid]);
 
   const handlePrint = () => {
+    window.focus();
     window.print();
   };
 
