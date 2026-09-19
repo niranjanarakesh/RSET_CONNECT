@@ -46,6 +46,7 @@ export const StudentMarks: React.FC = () => {
       : initialCgpa;
 
   const handlePrint = () => {
+    window.focus();
     window.print();
   };
 
@@ -74,7 +75,7 @@ export const StudentMarks: React.FC = () => {
 
         <button
           onClick={handlePrint}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 transition-colors cursor-pointer print:hidden"
         >
           <Printer className="h-3.5 w-3.5" />
           <span>Print Marks Report</span>
@@ -84,7 +85,7 @@ export const StudentMarks: React.FC = () => {
       {/* Top Banner & CGPA Simulator */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* CIA Aggregation Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:p-6">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs sm:p-6 print:border-slate-300">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
             Internal Assessment Aggregate
           </span>

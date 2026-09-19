@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { StudentUser, TimetableSlot } from '../../types';
-import { CalendarDays, Clock, MapPin, User } from 'lucide-react';
+import { CalendarDays, Clock, MapPin, User, Printer } from 'lucide-react';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
@@ -12,6 +12,11 @@ export const StudentTimetable: React.FC = () => {
   const [activeDay, setActiveDay] = useState<string>('Monday');
   const [timetable, setTimetable] = useState<TimetableSlot[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const handlePrint = () => {
+    window.focus();
+    window.print();
+  };
 
   useEffect(() => {
     const fetchTimetable = async () => {
@@ -33,15 +38,25 @@ export const StudentTimetable: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">Class Timetable</h1>
-        <p className="text-xs text-slate-500 sm:text-sm">
-          Weekly classroom lecture and laboratory schedule for <strong className="text-slate-800">{student?.class}</strong>.
-        </p>
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+        <div>
+          <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">Class Timetable</h1>
+          <p className="text-xs text-slate-500 sm:text-sm">
+            Weekly classroom lecture and laboratory schedule for <strong className="text-slate-800">{student?.class}</strong>.
+          </p>
+        </div>
+
+        <button
+          onClick={handlePrint}
+          className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 transition-colors cursor-pointer print:hidden"
+        >
+          <Printer className="h-3.5 w-3.5" />
+          <span>Print Schedule</span>
+        </button>
       </div>
 
       {/* Day Selector */}
-      <div className="flex flex-wrap gap-2 rounded-xl border border-slate-200 bg-white p-2 shadow-xs">
+      <div className="flex flex-wrap gap-2 rounded-xl border border-slate-200 bg-white p-2 shadow-xs print:hidden">
         {DAYS.map((day) => (
           <button
             key={day}

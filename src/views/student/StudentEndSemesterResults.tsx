@@ -53,6 +53,7 @@ export const StudentEndSemesterResults: React.FC = () => {
   }, [student?.uid, selectedSemester, selectedYear]);
 
   const handlePrint = () => {
+    window.focus();
     window.print();
   };
 

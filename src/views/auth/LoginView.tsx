@@ -24,21 +24,11 @@ export const LoginView: React.FC = () => {
     }
   };
 
-  const setDemoCredentials = (type: 'student_normal' | 'student_warning' | 'admin') => {
+  const fillCredentials = (role: 'student' | 'admin', id: string, pass: string) => {
     setError(null);
-    if (type === 'student_normal') {
-      setActiveTab('student');
-      setIdentifier('RSET2024CSE001');
-      setPassword('student123');
-    } else if (type === 'student_warning') {
-      setActiveTab('student');
-      setIdentifier('RSET2024CSE004');
-      setPassword('student123');
-    } else {
-      setActiveTab('admin');
-      setIdentifier('admin');
-      setPassword('admin123');
-    }
+    setActiveTab(role);
+    setIdentifier(id);
+    setPassword(pass);
   };
 
   return (
@@ -155,38 +145,53 @@ export const LoginView: React.FC = () => {
             </button>
           </form>
 
-          {/* Demo Quick Fill Actions */}
+          {/* Quick Fill Accounts */}
           <div className="mt-6 border-t border-slate-100 pt-4">
             <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500">
               <CheckCircle2 className="h-3.5 w-3.5 text-indigo-600" />
-              <span>Quick Demo Credentials</span>
+              <span>Login Accounts & Passwords</span>
             </div>
             <div className="mt-2 flex flex-col gap-1.5">
               <button
                 type="button"
-                onClick={() => setDemoCredentials('student_normal')}
-                className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-left text-xs text-slate-700 hover:bg-slate-100"
+                onClick={() => fillCredentials('student', 'RSET2024CSE001', 'student123')}
+                className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-left text-xs text-slate-700 hover:bg-slate-100 transition-colors"
               >
-                <span className="font-medium">Student: Brinda Raj (S5 CSE A)</span>
-                <span className="font-mono text-[10px] text-indigo-700">RSET2024CSE001</span>
+                <div>
+                  <span className="font-semibold text-slate-800">Brinda Raj</span>
+                  <span className="ml-1.5 font-mono text-[11px] text-slate-500">(RSET2024CSE001)</span>
+                </div>
+                <div className="font-mono text-[11px] text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                  Password: <span className="font-bold">student123</span>
+                </div>
               </button>
 
               <button
                 type="button"
-                onClick={() => setDemoCredentials('student_warning')}
-                className="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50/50 px-3 py-1.5 text-left text-xs text-amber-900 hover:bg-amber-100/50"
+                onClick={() => fillCredentials('student', 'RSET2024CSE004', 'student123')}
+                className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-left text-xs text-slate-700 hover:bg-slate-100 transition-colors"
               >
-                <span className="font-medium">Student: Rohit Menon (Low Attendance)</span>
-                <span className="font-mono text-[10px] text-amber-700">RSET2024CSE004</span>
+                <div>
+                  <span className="font-semibold text-slate-800">Rohit Menon</span>
+                  <span className="ml-1.5 font-mono text-[11px] text-slate-500">(RSET2024CSE004)</span>
+                </div>
+                <div className="font-mono text-[11px] text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                  Password: <span className="font-bold">student123</span>
+                </div>
               </button>
 
               <button
                 type="button"
-                onClick={() => setDemoCredentials('admin')}
-                className="flex items-center justify-between rounded-lg border border-indigo-200 bg-indigo-50/50 px-3 py-1.5 text-left text-xs text-indigo-900 hover:bg-indigo-100/50"
+                onClick={() => fillCredentials('admin', 'admin', 'admin123')}
+                className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-left text-xs text-slate-700 hover:bg-slate-100 transition-colors"
               >
-                <span className="font-medium">Admin: Academic Controller</span>
-                <span className="font-mono text-[10px] text-indigo-700">admin / admin123</span>
+                <div>
+                  <span className="font-semibold text-slate-800">Administrator</span>
+                  <span className="ml-1.5 font-mono text-[11px] text-slate-500">(admin)</span>
+                </div>
+                <div className="font-mono text-[11px] text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                  Password: <span className="font-bold">admin123</span>
+                </div>
               </button>
             </div>
           </div>

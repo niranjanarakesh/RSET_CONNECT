@@ -107,6 +107,7 @@ export const StudentProfile: React.FC = () => {
   };
 
   const handlePrintIdCard = () => {
+    window.focus();
     window.print();
   };
 
@@ -123,7 +124,7 @@ export const StudentProfile: React.FC = () => {
 
         <button
           onClick={handlePrintIdCard}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 transition-colors cursor-pointer print:hidden"
         >
           <Printer className="h-3.5 w-3.5" />
           <span>Print Digital ID Card</span>
