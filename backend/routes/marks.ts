@@ -34,22 +34,32 @@ router.get('/student/:uid', async (req: Request, res: Response) => {
         credits: '3',
       };
 
-      const i1 = parseFloat(m.internal1 || '0') || 0;
-      const i2 = parseFloat(m.internal2 || '0') || 0;
-      const asgn = parseFloat(m.assignment || '0') || 0;
-      const proj = parseFloat(m.project || '0') || 0;
+      const hasI1 = m.internal1 !== undefined && m.internal1 !== null && String(m.internal1).trim() !== '';
+      const i1 = hasI1 ? parseFloat(String(m.internal1)) : null;
+
+      const hasI2 = m.internal2 !== undefined && m.internal2 !== null && String(m.internal2).trim() !== '';
+      const i2 = hasI2 ? parseFloat(String(m.internal2)) : null;
+
+      const hasAsgn = m.assignment !== undefined && m.assignment !== null && String(m.assignment).trim() !== '';
+      const asgn = hasAsgn ? parseFloat(String(m.assignment)) : null;
+
+      const hasProj = m.project !== undefined && m.project !== null && String(m.project).trim() !== '';
+      const proj = hasProj ? parseFloat(String(m.project)) : null;
 
       const maxI1 = parseFloat(m.max_internal1 || '30') || 30;
       const maxI2 = parseFloat(m.max_internal2 || '30') || 30;
       const maxAsgn = parseFloat(m.max_assignment || '10') || 10;
       const maxProj = parseFloat(m.max_project || '10') || 10;
 
-      const totalObtained = i1 + i2 + asgn + proj;
+      const anyEntered = hasI1 || hasI2 || hasAsgn || hasProj;
+      const totalObtained = anyEntered ? (i1 ?? 0) + (i2 ?? 0) + (asgn ?? 0) + (proj ?? 0) : null;
       const maxTotal = maxI1 + maxI2 + maxAsgn + maxProj;
-      const percentage = maxTotal > 0 ? parseFloat(((totalObtained / maxTotal) * 100).toFixed(2)) : 0;
+      const percentage = (totalObtained !== null && maxTotal > 0) ? parseFloat(((totalObtained / maxTotal) * 100).toFixed(2)) : null;
 
-      totalMarksObtained += totalObtained;
-      totalMaxMarks += maxTotal;
+      if (totalObtained !== null) {
+        totalMarksObtained += totalObtained;
+        totalMaxMarks += maxTotal;
+      }
 
       return {
         subject_id: m.subject_id,
@@ -66,7 +76,7 @@ router.get('/student/:uid', async (req: Request, res: Response) => {
         max_internal2: maxI2,
         max_assignment: maxAsgn,
         max_project: maxProj,
-        total_obtained: parseFloat(totalObtained.toFixed(2)),
+        total_obtained: totalObtained !== null ? parseFloat(totalObtained.toFixed(2)) : null,
         max_total: maxTotal,
         percentage,
       };
@@ -118,47 +128,40 @@ router.post(['/', '/bulk'], async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'No marks data provided' });
     }
 
-    // Validation
+    // Validation: validate entered values
     for (const item of itemsToProcess) {
-      const i1 = parseFloat(String(item.internal1 ?? 0));
-      const i2 = parseFloat(String(item.internal2 ?? 0));
-      const asgn = parseFloat(String(item.assignment ?? 0));
-      const proj = parseFloat(String(item.project ?? 0));
+      const checkRange = (val: any, max: number, label: string) => {
+        if (val === undefined || val === null || String(val).trim() === '') return;
+        const num = parseFloat(String(val));
+        if (isNaN(num) || num < 0) {
+          throw new Error(`${label} marks cannot be negative for student ${item.student_uid}`);
+        }
+        if (num > max) {
+          throw new Error(`${label} marks (${num}) cannot exceed maximum (${max}) for student ${item.student_uid}`);
+        }
+      };
 
-      const maxI1 = parseFloat(String(item.max_internal1 ?? 30));
-      const maxI2 = parseFloat(String(item.max_internal2 ?? 30));
+      const maxI1 = parseFloat(String(item.max_internal1 ?? 50));
+      const maxI2 = parseFloat(String(item.max_internal2 ?? 50));
       const maxAsgn = parseFloat(String(item.max_assignment ?? 10));
       const maxProj = parseFloat(String(item.max_project ?? 10));
 
-      if (i1 < 0 || i2 < 0 || asgn < 0 || proj < 0) {
-        return res.status(400).json({
-          error: `Marks cannot be negative for student ${item.student_uid}`,
-        });
-      }
-
-      if (i1 > maxI1) {
-        return res.status(400).json({
-          error: `Internal 1 marks (${i1}) cannot exceed maximum (${maxI1}) for student ${item.student_uid}`,
-        });
-      }
-      if (i2 > maxI2) {
-        return res.status(400).json({
-          error: `Internal 2 marks (${i2}) cannot exceed maximum (${maxI2}) for student ${item.student_uid}`,
-        });
-      }
-      if (asgn > maxAsgn) {
-        return res.status(400).json({
-          error: `Assignment marks (${asgn}) cannot exceed maximum (${maxAsgn}) for student ${item.student_uid}`,
-        });
-      }
-      if (proj > maxProj) {
-        return res.status(400).json({
-          error: `Project marks (${proj}) cannot exceed maximum (${maxProj}) for student ${item.student_uid}`,
-        });
+      try {
+        checkRange(item.internal1, maxI1, 'Internal 1');
+        checkRange(item.internal2, maxI2, 'Internal 2');
+        checkRange(item.assignment, maxAsgn, 'Assignment');
+        checkRange(item.project, maxProj, 'Project');
+      } catch (err: any) {
+        return res.status(400).json({ error: err.message });
       }
     }
 
     const marksList = await readCsv<Marks>(CSV_FILES.MARKS);
+
+    const toCsvVal = (val: any) => {
+      if (val === undefined || val === null || String(val).trim() === '') return '';
+      return String(val).trim();
+    };
 
     for (const item of itemsToProcess) {
       const targetUid = String(item.student_uid).trim().toUpperCase();
@@ -173,12 +176,12 @@ router.post(['/', '/bulk'], async (req: Request, res: Response) => {
       const updatedRow: Marks = {
         student_uid: targetUid,
         subject_id: targetSub,
-        internal1: String(item.internal1 ?? 0),
-        internal2: String(item.internal2 ?? 0),
-        assignment: String(item.assignment ?? 0),
-        project: String(item.project ?? 0),
-        max_internal1: String(item.max_internal1 ?? 30),
-        max_internal2: String(item.max_internal2 ?? 30),
+        internal1: toCsvVal(item.internal1),
+        internal2: toCsvVal(item.internal2),
+        assignment: toCsvVal(item.assignment),
+        project: toCsvVal(item.project),
+        max_internal1: String(item.max_internal1 ?? 50),
+        max_internal2: String(item.max_internal2 ?? 50),
         max_assignment: String(item.max_assignment ?? 10),
         max_project: String(item.max_project ?? 10),
       };

@@ -25,23 +25,16 @@ export const StudentBusTracking: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">College Bus Fleet & Transit Schedule</h1>
-        <p className="text-xs text-slate-500 sm:text-sm">
-          Campus bus routes, designated boarding stations, and active driver contacts.
-        </p>
-      </div>
-
-      {/* Mandatory Demo Transit Notice */}
-      <div className="flex items-start gap-3 rounded-2xl border border-sky-200 bg-sky-50 p-4 text-xs text-sky-950 sm:text-sm">
-        <Info className="mt-0.5 h-5 w-5 shrink-0 text-sky-700" />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <div className="font-bold">Demo Transit Information Notice</div>
-          <p className="mt-0.5 text-xs text-sky-900">
-            This module displays scheduled transit routes and station stops managed by the RSET Transport
-            Committee. Real-time GPS hardware telematics is not claimed. For immediate bus queries, please
-            contact the assigned driver or transport supervisor directly.
+          <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">Campus Transit Schedule</h1>
+          <p className="text-xs text-slate-500 sm:text-sm">
+            Designated campus bus routes, stops, and driver contact directory.
           </p>
+        </div>
+        <div className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-xs text-slate-600 font-medium self-start sm:self-auto">
+          <Info className="h-3.5 w-3.5 text-slate-500" />
+          <span>Scheduled routes managed by Transport Cell</span>
         </div>
       </div>
 

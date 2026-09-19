@@ -86,17 +86,17 @@ export interface SubjectMarks {
   teacher: string;
   semester: string;
   credits: string;
-  internal1: number;
-  internal2: number;
-  assignment: number;
-  project: number;
+  internal1: number | null;
+  internal2: number | null;
+  assignment: number | null;
+  project: number | null;
   max_internal1: number;
   max_internal2: number;
   max_assignment: number;
   max_project: number;
-  total_obtained: number;
+  total_obtained: number | null;
   max_total: number;
-  percentage: number;
+  percentage: number | null;
 }
 
 export interface MarksResponse {
