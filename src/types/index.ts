@@ -246,13 +246,26 @@ export interface HallTicketResponse {
 
 export interface FeedbackItem {
   id: string;
-  student_uid: string;
-  subject_id: string;
+  student_uid?: string;
+  subject_id?: string;
+  subject?: string;
+  subject_code?: string;
   teacher: string;
   score: string;
   comments: string;
   semester: string;
+  academic_year?: string;
   submitted_at: string;
+  q1?: string;
+  q2?: string;
+  q3?: string;
+  q4?: string;
+  q5?: string;
+  q6?: string;
+  q7?: string;
+  q8?: string;
+  q9?: string;
+  q10?: string;
 }
 
 export interface FeedbackAnalyticsResponse {
@@ -261,17 +274,7 @@ export interface FeedbackAnalyticsResponse {
   rating_distribution: Record<number, number>;
   teacher_analytics: Array<{ teacher: string; responses: number; average_score: number }>;
   subject_analytics: Array<{ code: string; name: string; teacher: string; responses: number; average_score: number }>;
-  feedback_records: Array<{
-    id: string;
-    teacher: string;
-    subject: string;
-    subject_code: string;
-    semester: string;
-    academic_year: string;
-    score: string;
-    comments: string;
-    submitted_at: string;
-  }>;
+  feedback_records: FeedbackItem[];
 }
 
 export interface AdminDashboardData {

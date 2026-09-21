@@ -41,6 +41,41 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+// GET /api/students/export & /api/students/export/csv - Export students to CSV
+router.get(['/export', '/export/csv'], async (req: Request, res: Response) => {
+  try {
+    const students = await readCsv<Student>(CSV_FILES.STUDENTS);
+    const safeStudents = students.map(({ password, ...rest }) => rest);
+    const headers = [
+      'id', 'uid', 'name', 'class', 'email', 'phone', 'gender',
+      'department', 'semester', 'cgpa', 'completed_credits'
+    ];
+    let csv = headers.join(',') + '\n';
+    safeStudents.forEach((s) => {
+      const row = [
+        `"${s.id || ''}"`,
+        `"${s.uid || ''}"`,
+        `"${(s.name || '').replace(/"/g, '""')}"`,
+        `"${s.class || ''}"`,
+        `"${s.email || ''}"`,
+        `"${s.phone || ''}"`,
+        `"${s.gender || ''}"`,
+        `"${(s.department || '').replace(/"/g, '""')}"`,
+        `"${s.semester || ''}"`,
+        `"${s.cgpa || ''}"`,
+        `"${s.completed_credits || ''}"`
+      ];
+      csv += row.join(',') + '\n';
+    });
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', `attachment; filename="students_export_${Date.now()}.csv"`);
+    return res.send(csv);
+  } catch (error: any) {
+    console.error('Error exporting students:', error);
+    return res.status(500).json({ error: 'Failed to export students CSV' });
+  }
+});
+
 // GET /api/students/:uid - Get single student
 router.get('/:uid', async (req: Request, res: Response) => {
   try {

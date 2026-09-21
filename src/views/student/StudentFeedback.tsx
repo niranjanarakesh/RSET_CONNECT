@@ -85,10 +85,22 @@ export const StudentFeedback: React.FC = () => {
         body: JSON.stringify({
           student_uid: student.uid,
           subject_id: selectedSubject.id,
+          subject: selectedSubject.name,
+          subject_code: selectedSubject.code,
           teacher: selectedSubject.teacher,
           score,
           comments,
           semester: student.semester,
+          q1: ratings['q1'] || 5,
+          q2: ratings['q2'] || 5,
+          q3: ratings['q3'] || 5,
+          q4: ratings['q4'] || 5,
+          q5: ratings['q5'] || 5,
+          q6: ratings['q6'] || 5,
+          q7: ratings['q7'] || 5,
+          q8: ratings['q8'] || 5,
+          q9: ratings['q9'] || 5,
+          q10: ratings['q10'] || 5,
         }),
       });
 

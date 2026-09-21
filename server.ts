@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
 import { initCsvFiles } from './backend/csv/csvService';
@@ -58,6 +59,41 @@ async function startServer() {
   app.use('/api/results', resultsRouter);
   app.use('/api/upload', uploadRouter);
   app.use('/api/analytics', analyticsRouter);
+
+  // Universal CSV Export endpoint for downloadable data
+  app.get('/api/:entity/export/csv', (req, res, next) => {
+    try {
+      const entity = req.params.entity.toLowerCase();
+      const fileMap: Record<string, string> = {
+        students: 'students.csv',
+        attendance: 'attendance.csv',
+        marks: 'marks.csv',
+        activities: 'activities.csv',
+        feedback: 'feedback.csv',
+        announcements: 'announcements.csv',
+        buses: 'buses.csv',
+        examinations: 'examinations.csv',
+        timetable: 'timetable.csv',
+        results: 'end_semester_results.csv',
+        end_semester_results: 'end_semester_results.csv',
+      };
+
+      const fileName = fileMap[entity];
+      if (!fileName) {
+        return next();
+      }
+
+      const filePath = path.join(process.cwd(), 'data', fileName);
+      if (fs.existsSync(filePath)) {
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+        return res.sendFile(filePath);
+      }
+      return next();
+    } catch (err) {
+      return next(err);
+    }
+  });
 
   // Health check
   app.get('/api/health', (req, res) => {
