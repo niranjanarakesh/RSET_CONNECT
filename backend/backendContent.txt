@@ -1,0 +1,1316 @@
+============================================================
+                    BACKEND FOLDER
+============================================================
+
+FOLDER:
+-------
+backend/
+
+PURPOSE:
+--------
+The backend folder contains the server-side logic of the
+RSET Connect project.
+
+It is responsible for processing requests from the frontend,
+managing application data, performing CRUD operations, and
+sending responses back to the frontend.
+
+CRUD stands for:
+
+C - Create
+R - Read
+U - Update
+D - Delete
+
+The backend mainly works with CSV files as the data storage
+system.
+
+The backend folder contains:
+
+1. csv/
+2. routes/
+3. types.ts
+
+
+BACKEND FOLDER STRUCTURE:
+-------------------------
+
+backend/
+|
+|-- csv/
+|   |-- csvService.ts
+|   |-- seedData.ts
+|
+|-- routes/
+|   |-- activities.ts
+|   |-- analytics.ts
+|   |-- announcements.ts
+|   |-- attendance.ts
+|   |-- auth.ts
+|   |-- buses.ts
+|   |-- events.ts
+|   |-- examinations.ts
+|   |-- feedback.ts
+|   |-- marks.ts
+|   |-- results.ts
+|   |-- students.ts
+|   |-- subjects.ts
+|   |-- timetable.ts
+|   |-- upload.ts
+|
+|-- types.ts
+
+
+
+============================================================
+1. CSV FOLDER
+============================================================
+
+FOLDER:
+-------
+backend/csv/
+
+PURPOSE:
+--------
+The csv folder contains the files responsible for managing
+CSV data used by the backend.
+
+The project uses CSV files instead of a traditional database
+to store information such as students, marks, attendance,
+announcements, and events.
+
+The csv folder provides common functionality for reading,
+writing, updating, and initializing CSV data.
+
+
+------------------------------------------------------------
+1.1 csvService.ts (CONTINUED)
+------------------------------------------------------------
+
+WHY IT IS IMPORTANT:
+--------------------
+Instead of writing separate CSV reading and writing logic
+inside every route file, the routes can use the common
+functions provided by csvService.ts.
+
+For example:
+
+- attendance.ts uses CSV functions to read attendance data.
+- marks.ts uses CSV functions to read and update marks.
+- students.ts uses CSV functions to add, update, and delete
+  student records.
+
+Therefore, csvService.ts acts as a common utility layer
+between the backend routes and the CSV files.
+
+GENERAL FLOW:
+-------------
+
+Route File
+    |
+    v
+csvService.ts
+    |
+    v
+CSV File
+    |
+    v
+Data returned to Route File
+
+
+
+------------------------------------------------------------
+1.2 seedData.ts
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Provides initial or sample data for the application.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Creates sample records.
+2. Initializes CSV files with data.
+3. Adds sample students.
+4. Adds sample attendance information.
+5. Adds sample marks.
+6. Adds sample announcements.
+7. Adds sample subjects and other records.
+8. Helps set up the application for development and testing.
+
+WHY IT IS IMPORTANT:
+--------------------
+When the project is started for the first time, the CSV
+files may not contain the required data.
+
+seedData.ts helps populate the CSV files with sample data
+so that the application can be tested without entering
+everything manually.
+
+DIFFERENCE BETWEEN csvService.ts AND seedData.ts:
+-------------------------------------------------
+
+csvService.ts:
+- Handles CSV reading and writing operations.
+- Provides reusable functions for data management.
+
+seedData.ts:
+- Provides initial or sample records.
+- Uses data management functions to populate the CSV files.
+
+
+
+============================================================
+2. ROUTES FOLDER
+============================================================
+
+FOLDER:
+-------
+backend/routes/
+
+PURPOSE:
+--------
+The routes folder contains the API route files of the
+application.
+
+Each route file handles a particular feature or module
+of RSET Connect.
+
+For example:
+
+- activities.ts handles student activities.
+- attendance.ts handles attendance.
+- marks.ts handles student marks.
+- students.ts handles student information.
+- auth.ts handles authentication.
+
+The route files receive requests from the frontend,
+process the requests, access the required CSV files,
+and send responses back to the frontend.
+
+GENERAL RESPONSIBILITIES:
+-------------------------
+1. Receive HTTP requests.
+2. Process request data.
+3. Validate input.
+4. Read information from CSV files.
+5. Add, update, or delete records.
+6. Send responses to the frontend.
+7. Handle errors when required.
+
+
+GENERAL BACKEND REQUEST FLOW:
+-----------------------------
+
+Frontend
+    |
+    | HTTP Request
+    v
+Backend Route
+    |
+    | Read / Write Data
+    v
+csvService.ts
+    |
+    v
+CSV File
+    |
+    v
+Backend Response
+    |
+    v
+Frontend UI
+
+
+
+============================================================
+2.1 activities.ts
+============================================================
+
+PURPOSE:
+--------
+Handles student activity information.
+
+CSV FILE USED:
+--------------
+activities.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves activities of a specific student.
+2. Retrieves all activity records.
+3. Adds a new activity.
+4. Updates an existing activity.
+5. Stores activity information in the CSV file.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /student/:uid
+-----------------
+Retrieves activities belonging to a particular student.
+
+GET /
+------
+Retrieves all activity records.
+
+POST /
+-------
+Adds a new activity record.
+
+PUT /:id
+--------
+Updates an existing activity using its ID.
+
+DATA HANDLING:
+--------------
+The route reads and modifies data stored in
+activities.csv.
+
+CONNECTED FRONTEND:
+-------------------
+- Student activity view.
+- Admin activity management view.
+
+
+
+============================================================
+2.2 analytics.ts
+============================================================
+
+PURPOSE:
+--------
+Provides analytics and summary information for the
+administrator dashboard.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Collects information from different CSV files.
+2. Calculates or prepares dashboard statistics.
+3. Provides summary information for administrators.
+4. Combines data from different modules.
+5. Sends dashboard-related information to the frontend.
+
+MAIN ENDPOINT:
+-------------
+
+GET /admin-dashboard
+--------------------
+Retrieves data required for the admin dashboard.
+
+CSV FILES USED:
+---------------
+- students.csv
+- attendance.csv
+- marks.csv
+- activities.csv
+- examinations.csv
+- announcements.csv
+
+CONNECTED FRONTEND:
+-------------------
+- Admin dashboard.
+- Overview section.
+
+IMPORTANT:
+----------
+This route combines information from multiple modules
+instead of handling only one type of record.
+
+
+
+============================================================
+2.3 announcements.ts
+============================================================
+
+PURPOSE:
+--------
+Handles college announcements.
+
+CSV FILE USED:
+--------------
+announcements.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves announcements.
+2. Creates new announcements.
+3. Updates existing announcements.
+4. Deletes announcements.
+5. Sends announcement data to the frontend.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /
+------
+Retrieves all announcements.
+
+POST /
+-------
+Creates a new announcement.
+
+PUT /:id
+--------
+Updates an announcement using its ID.
+
+DELETE /:id
+-----------
+Deletes an announcement using its ID.
+
+CONNECTED FRONTEND:
+-------------------
+- Student announcements view.
+- Admin announcement management view.
+
+
+
+============================================================
+2.4 attendance.ts
+============================================================
+
+PURPOSE:
+--------
+Handles attendance information and attendance records.
+
+CSV FILES USED:
+---------------
+- attendance.csv
+- attendance_records.csv
+- subjects.csv
+- students.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves attendance information for a student.
+2. Retrieves detailed attendance records.
+3. Adds attendance data.
+4. Adds multiple attendance records in bulk.
+5. Exports attendance data.
+6. Generates attendance reports in CSV format.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /student/:uid
+-----------------
+Retrieves attendance information for a specific student.
+
+GET /records/:uid
+-----------------
+Retrieves detailed attendance records for a student.
+
+POST /
+-------
+Adds attendance data.
+
+POST /bulk
+----------
+Adds multiple attendance records at once.
+
+GET /export
+-----------
+Exports attendance information.
+
+GET /export/csv
+---------------
+Exports attendance data in CSV format.
+
+DATA HANDLING:
+--------------
+attendance.csv:
+- Stores attendance summary information.
+
+attendance_records.csv:
+- Stores detailed attendance records.
+
+subjects.csv:
+- Helps identify subject information.
+
+students.csv:
+- Helps connect attendance data with student information.
+
+CONNECTED FRONTEND:
+-------------------
+- Student attendance view.
+- Admin attendance management.
+- Attendance export functionality.
+
+
+
+============================================================
+2.5 auth.ts
+============================================================
+
+PURPOSE:
+--------
+Handles user authentication and login.
+
+CSV FILE USED:
+--------------
+students.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Accepts login requests.
+2. Checks user credentials.
+3. Retrieves current user information.
+4. Sends authentication responses.
+5. Helps the frontend identify the logged-in user.
+
+MAIN ENDPOINTS:
+---------------
+
+POST /login
+-----------
+Authenticates the user using the submitted login details.
+
+GET /me
+-------
+Retrieves information about the current logged-in user.
+
+CONNECTED FRONTEND:
+-------------------
+- LoginView.tsx
+- AuthContext.tsx
+- Protected application views.
+
+AUTHENTICATION FLOW:
+--------------------
+
+User enters login details
+          |
+          v
+LoginView.tsx
+          |
+          v
+AuthContext.tsx
+          |
+          v
+POST /login
+          |
+          v
+auth.ts
+          |
+          v
+students.csv
+          |
+          v
+Authentication response
+          |
+          v
+User dashboard
+
+
+
+============================================================
+2.6 buses.ts
+============================================================
+
+PURPOSE:
+--------
+Handles college bus information.
+
+CSV FILE USED:
+--------------
+buses.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves bus information.
+2. Adds new bus records.
+3. Updates bus details.
+4. Deletes bus records.
+5. Sends bus information to the frontend.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /
+------
+Retrieves all buses.
+
+POST /
+-------
+Adds a new bus.
+
+PUT /:id
+--------
+Updates bus information using its ID.
+
+DELETE /:id
+-----------
+Deletes a bus using its ID.
+
+CONNECTED FRONTEND:
+-------------------
+- Student bus view.
+- Admin bus management view.
+
+BUS INFORMATION MAY INCLUDE:
+----------------------------
+- Bus number.
+- Route.
+- Timing.
+- Driver information.
+- Bus location or tracking details.
+
+
+
+============================================================
+2.7 events.ts
+============================================================
+
+PURPOSE:
+--------
+Handles college events.
+
+CSV FILE USED:
+--------------
+events.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves events.
+2. Creates new events.
+3. Updates existing events.
+4. Deletes events.
+5. Sends event information to the frontend.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /
+------
+Retrieves all events.
+
+POST /
+-------
+Creates a new event.
+
+PUT /:id
+--------
+Updates an event using its ID.
+
+DELETE /:id
+-----------
+Deletes an event using its ID.
+
+CONNECTED FRONTEND:
+-------------------
+- Student events view.
+- Admin event management view.
+
+EVENT INFORMATION MAY INCLUDE:
+------------------------------
+- Event title.
+- Event date.
+- Venue.
+- Description.
+- Event category.
+
+
+
+============================================================
+2.8 examinations.ts
+============================================================
+
+PURPOSE:
+--------
+Handles examination information, examination schedules,
+and hall ticket-related data.
+
+CSV FILES USED:
+---------------
+- examinations.csv
+- students.csv
+- exams.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves examination information.
+2. Retrieves examination schedules.
+3. Adds examination records.
+4. Adds examination schedules.
+5. Updates examination records.
+6. Updates examination schedules.
+7. Deletes examination records.
+8. Deletes examination schedules.
+9. Retrieves hall ticket information.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /
+------
+Retrieves examination information.
+
+GET /schedules
+--------------
+Retrieves examination schedules.
+
+POST /
+-------
+Adds an examination.
+
+POST /schedules
+---------------
+Adds an examination schedule.
+
+PUT /:id
+--------
+Updates an examination.
+
+PUT /schedules/:id
+------------------
+Updates an examination schedule.
+
+DELETE /:id
+-----------
+Deletes an examination.
+
+DELETE /schedules/:id
+---------------------
+Deletes an examination schedule.
+
+GET /hall-ticket/:uid
+---------------------
+Retrieves hall ticket information for a particular student.
+
+CONNECTED FRONTEND:
+-------------------
+- Student examination view.
+- Admin examination management.
+- Hall ticket functionality.
+
+
+
+============================================================
+2.9 feedback.ts
+============================================================
+
+PURPOSE:
+--------
+Handles feedback submitted by users.
+
+CSV FILE USED:
+--------------
+feedback.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves feedback.
+2. Accepts new feedback.
+3. Exports feedback.
+4. Exports feedback in CSV format.
+5. Sends feedback information to the frontend.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /export
+-----------
+Exports feedback information.
+
+GET /export/csv
+---------------
+Exports feedback in CSV format.
+
+GET /
+------
+Retrieves feedback records.
+
+POST /
+-------
+Submits new feedback.
+
+CONNECTED FRONTEND:
+-------------------
+- Student feedback form.
+- Admin feedback management view.
+
+
+
+============================================================
+2.10 marks.ts
+============================================================
+
+PURPOSE:
+--------
+Handles student marks and academic performance.
+
+CSV FILES USED:
+---------------
+- marks.csv
+- subjects.csv
+- students.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves marks for a particular student.
+2. Adds marks.
+3. Adds multiple marks records in bulk.
+4. Exports marks information.
+5. Exports marks in CSV format.
+6. Uses subject information when required.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /student/:uid
+-----------------
+Retrieves marks for a specific student.
+
+POST /
+-------
+Adds marks.
+
+POST /bulk
+----------
+Adds multiple marks records at once.
+
+GET /export
+-----------
+Exports marks information.
+
+GET /export/csv
+---------------
+Exports marks in CSV format.
+
+CONNECTED FRONTEND:
+-------------------
+- Student marks view.
+- Admin marks management.
+- Marks export functionality.
+
+MARKS DATA MAY INCLUDE:
+-----------------------
+- Student ID.
+- Subject code.
+- Subject name.
+- Internal marks.
+- External marks.
+- Total marks.
+- Grade.
+
+
+
+============================================================
+2.11 results.ts
+============================================================
+
+PURPOSE:
+--------
+Handles end-semester academic results.
+
+CSV FILES USED:
+---------------
+- end_semester_results.csv
+- students.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves results for a specific student.
+2. Retrieves all results.
+3. Validates result data.
+4. Imports result data.
+5. Deletes result records.
+6. Exports results in CSV format.
+7. Provides a sample CSV file for result import.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /student/:uid
+-----------------
+Retrieves results for a particular student.
+
+GET /
+------
+Retrieves all result records.
+
+POST /validate
+--------------
+Validates result data before importing it.
+
+POST /import
+------------
+Imports result data.
+
+DELETE /:student_uid/:semester/:course_code/:academic_year
+-----------------------------------------------------------
+Deletes a specific result record based on:
+- Student UID.
+- Semester.
+- Course code.
+- Academic year.
+
+GET /export/csv
+---------------
+Exports results in CSV format.
+
+GET /sample-csv/download
+------------------------
+Downloads a sample CSV file for result importing.
+
+CONNECTED FRONTEND:
+-------------------
+- Student results view.
+- Admin result management.
+- Result import and export functionality.
+
+
+
+============================================================
+2.12 students.ts
+============================================================
+
+PURPOSE:
+--------
+Handles student information and student management.
+
+CSV FILE USED:
+--------------
+students.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves all students.
+2. Retrieves a particular student.
+3. Adds new students.
+4. Updates student details.
+5. Deletes students.
+6. Exports student data.
+7. Deletes related records when a student is removed.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /
+------
+Retrieves all students.
+
+GET /export
+-----------
+Exports student information.
+
+GET /export/csv
+---------------
+Exports student information in CSV format.
+
+GET /:uid
+---------
+Retrieves a specific student using their UID.
+
+POST /
+-------
+Adds a new student.
+
+PUT /:uid
+---------
+Updates a student's information.
+
+DELETE /:uid
+------------
+Deletes a student using their UID.
+
+CSV FILES AFFECTED WHEN A STUDENT IS DELETED:
+---------------------------------------------
+
+- students.csv
+- attendance.csv
+- attendance_records.csv
+- marks.csv
+- activities.csv
+- feedback.csv
+- exams.csv
+- end_semester_results.csv
+
+IMPORTANT:
+----------
+When a student is deleted, related records may also be
+deleted from other CSV files.
+
+This prevents old records from remaining in the system
+after the student has been removed.
+
+CONNECTED FRONTEND:
+-------------------
+- Admin student management.
+- Student profile.
+- Student data export.
+
+
+
+============================================================
+2.13 subjects.ts
+============================================================
+
+PURPOSE:
+--------
+Provides subject information to the application.
+
+CSV FILE USED:
+--------------
+subjects.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves available subjects.
+2. Provides subject information to other modules.
+3. Helps connect marks and attendance with subjects.
+
+MAIN ENDPOINT:
+-------------
+
+GET /
+------
+Retrieves subject information.
+
+CONNECTED FRONTEND:
+-------------------
+- Student marks view.
+- Student attendance view.
+- Examination-related views.
+- Timetable-related views.
+- Admin academic management.
+
+
+
+============================================================
+2.14 timetable.ts
+============================================================
+
+PURPOSE:
+--------
+Handles college timetable information.
+
+CSV FILE USED:
+--------------
+timetable.csv
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves timetable entries.
+2. Adds timetable entries.
+3. Updates timetable entries.
+4. Deletes timetable entries.
+5. Sends timetable data to the frontend.
+
+MAIN ENDPOINTS:
+---------------
+
+GET /
+------
+Retrieves timetable information.
+
+POST /
+-------
+Adds a timetable entry.
+
+PUT /:id
+--------
+Updates a timetable entry using its ID.
+
+DELETE /:id
+-----------
+Deletes a timetable entry.
+
+CONNECTED FRONTEND:
+-------------------
+- Student timetable view.
+- Admin timetable management.
+
+TIMETABLE INFORMATION MAY INCLUDE:
+-----------------------------------
+- Day.
+- Time.
+- Subject.
+- Faculty.
+- Classroom.
+
+
+
+============================================================
+2.15 upload.ts
+============================================================
+
+PURPOSE:
+--------
+Handles file uploads to the backend.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Accepts uploaded files.
+2. Processes uploaded files.
+3. Uses multipart form data.
+4. Supports file-based data operations.
+5. Helps with CSV import functionality.
+
+MAIN ENDPOINT:
+-------------
+
+POST /
+-------
+Accepts an uploaded file.
+
+The route uses:
+
+upload.single('file')
+
+This means that the backend expects a single uploaded
+file with the field name "file".
+
+CONNECTED FRONTEND:
+-------------------
+- Admin file upload functionality.
+- CSV import functionality.
+- Bulk data management.
+
+IMPORTANT:
+----------
+The upload route is useful when administrators need
+to upload data instead of entering each record manually.
+
+
+
+============================================================
+3. TYPES.TS
+============================================================
+
+FILE:
+-----
+backend/types.ts
+
+PURPOSE:
+--------
+Contains TypeScript types and interfaces used by the
+backend.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Defines the structure of backend data.
+2. Provides type safety.
+3. Describes the expected properties of objects.
+4. Reduces errors caused by incorrect data types.
+5. Makes backend code easier to maintain.
+6. Ensures consistency between different modules.
+
+TYPES MAY REPRESENT:
+--------------------
+- Students.
+- Attendance.
+- Marks.
+- Subjects.
+- Announcements.
+- Events.
+- Examinations.
+- Feedback.
+- Other backend data structures.
+
+WHY IT IS IMPORTANT:
+--------------------
+TypeScript uses types to check whether data is being
+used correctly.
+
+For example, a Student type may define properties such as:
+
+- Student ID.
+- Name.
+- Email.
+- Department.
+- Semester.
+- Role.
+
+If incorrect data is passed to a function or variable,
+TypeScript can help identify the error during development.
+
+
+
+============================================================
+4. COMPLETE BACKEND WORKING
+============================================================
+
+The backend works as a connection between the frontend
+and the CSV data files.
+
+GENERAL FLOW:
+-------------
+
+Frontend
+    |
+    | Sends API Request
+    v
+Backend Route
+    |
+    | Processes Request
+    v
+CSV Service
+    |
+    | Reads / Writes Data
+    v
+CSV File
+    |
+    | Returns Data
+    v
+Backend Route
+    |
+    | Sends API Response
+    v
+Frontend
+    |
+    v
+Updated User Interface
+
+
+EXAMPLE: ADDING A STUDENT
+-------------------------
+
+1. Admin enters student details in the frontend.
+2. Frontend sends a POST request to students.ts.
+3. students.ts receives the request.
+4. The backend validates the submitted information.
+5. The CSV service is used to write the data.
+6. The new student is added to students.csv.
+7. Backend sends a response to the frontend.
+8. The student list is updated.
+
+
+EXAMPLE: DISPLAYING MARKS
+-------------------------
+
+1. Student opens the marks page.
+2. Frontend sends a request to marks.ts.
+3. marks.ts receives the student's UID.
+4. The backend reads marks.csv.
+5. Subject information may be retrieved from subjects.csv.
+6. The backend prepares the response.
+7. Marks are sent to the frontend.
+8. The frontend displays the student's marks.
+
+
+EXAMPLE: LOGIN
+--------------
+
+1. User enters login details.
+2. LoginView.tsx sends the details through AuthContext.
+3. AuthContext sends a request to auth.ts.
+4. auth.ts checks the information using students.csv.
+5. The backend sends a success or failure response.
+6. If successful, the user is allowed into the application.
+
+
+============================================================
+5. SUMMARY OF BACKEND FILES
+============================================================
+
+CSV FOLDER:
+-----------
+
+csvService.ts:
+- Handles CSV reading, writing, updating, and deleting.
+
+seedData.ts:
+- Provides initial and sample data.
+
+
+ROUTES FOLDER:
+--------------
+
+activities.ts:
+- Handles student activities.
+
+analytics.ts:
+- Handles admin dashboard analytics.
+
+announcements.ts:
+- Handles college announcements.
+
+attendance.ts:
+- Handles attendance and attendance records.
+
+auth.ts:
+- Handles login and authentication.
+
+buses.ts:
+- Handles college bus information.
+
+events.ts:
+- Handles college events.
+
+examinations.ts:
+- Handles examinations, schedules, and hall tickets.
+
+feedback.ts:
+- Handles user feedback.
+
+marks.ts:
+- Handles student marks.
+
+results.ts:
+- Handles end-semester results.
+
+students.ts:
+- Handles student information and student management.
+
+subjects.ts:
+- Provides subject information.
+
+timetable.ts:
+- Handles timetable information.
+
+upload.ts:
+- Handles file uploads.
+
+
+TYPES FILE:
+------------
+
+types.ts:
+- Defines backend TypeScript types and interfaces.
+
+
+
+============================================================
+6. IMPORTANT POINTS FOR VIVA
+============================================================
+
+1. The backend handles server-side logic and API requests.
+
+2. The routes folder contains separate route files for
+   different application features.
+
+3. The CSV folder contains reusable functions for managing
+   CSV data.
+
+4. csvService.ts is responsible for common CSV operations.
+
+5. seedData.ts is responsible for inserting initial or
+   sample data.
+
+6. The project uses CSV files as its data storage system.
+
+7. The frontend communicates with the backend using
+   HTTP requests.
+
+8. The backend reads and modifies CSV files based on
+   frontend requests.
+
+9. TypeScript types are defined in types.ts to provide
+   type safety.
+
+10. The students.ts route also handles related records
+    when a student is deleted.
+
+11. The analytics.ts route combines information from
+    multiple CSV files to display admin dashboard data.
+
+12. The upload.ts route is used to handle uploaded files.
+
+13. CRUD operations are implemented in multiple route files.
+
+14. Each route is responsible for a specific module,
+    making the backend organized and easier to maintain.
+
+15. The backend acts as the connection between the
+    React frontend and the CSV data storage.

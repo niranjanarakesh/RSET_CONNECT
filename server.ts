@@ -1,3 +1,11 @@
+// Starts and configures the backend server.
+// Registers the required API routes.
+// Handles incoming requests from the frontend.
+// Directs requests to the appropriate route files.
+// Connects the frontend with backend functionality.
+// Processes requests and sends responses.
+// Acts as the main entry point of the backend.
+
 import express from 'express';
 import path from 'path';
 import fs from 'fs';

@@ -1,0 +1,2030 @@
+============================================================
+                    SRC FOLDER
+============================================================
+
+FOLDER:
+-------
+src/
+
+PURPOSE:
+--------
+The src folder contains the frontend source code of the
+RSET Connect project.
+
+The frontend is responsible for displaying the user interface
+and allowing users to interact with the application.
+
+It is developed using:
+
+- React
+- TypeScript
+- CSS
+
+The frontend communicates with the backend through API
+requests. It displays the data received from the backend
+and sends user actions back to the backend.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displaying the application interface.
+2. Managing student and admin views.
+3. Handling navigation.
+4. Managing authentication state.
+5. Sending requests to the backend.
+6. Displaying data from CSV files through the backend.
+7. Accepting user input.
+8. Providing reusable components.
+9. Applying styles to the application.
+
+STRUCTURE:
+----------
+
+src/
+|
+|-- App.tsx
+|-- main.tsx
+|-- index.css
+|
+|-- components/
+|   |-- layout/
+|       |-- Navbar.tsx
+|       |-- Sidebar.tsx
+|
+|-- context/
+|   |-- AuthContext.tsx
+|
+|-- types/
+|   |-- index.ts
+|
+|-- utils/
+|   |-- activityCategories.ts
+|   |-- navigation.ts
+|
+|-- views/
+    |
+    |-- admin/
+    |
+    |-- auth/
+    |   |-- LoginView.tsx
+    |
+    |-- student/
+
+
+FRONTEND WORKING FLOW:
+----------------------
+
+User interacts with the website
+            |
+            v
+React Component
+            |
+            v
+API Request
+            |
+            v
+Backend Route
+            |
+            v
+CSV Data
+            |
+            v
+Backend Response
+            |
+            v
+React Component updates
+            |
+            v
+Updated User Interface
+
+
+
+============================================================
+1. ROOT FILES OF THE SRC FOLDER
+============================================================
+
+
+------------------------------------------------------------
+1.1 App.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+App.tsx is the main React application component.
+
+It controls the overall structure of the frontend and
+determines which pages or views should be displayed.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Organizes the main application layout.
+2. Displays the appropriate view.
+3. Connects authentication with the application.
+4. Controls the student and admin sections.
+5. Handles the overall application navigation structure.
+6. Renders the main components of the project.
+
+IMPORTANT:
+----------
+App.tsx acts as the central component of the React
+application.
+
+It connects the main frontend components and views.
+
+The user may see different screens depending on their role.
+
+For example:
+
+Student:
+- Student dashboard.
+- Attendance.
+- Marks.
+- Timetable.
+- Results.
+
+Admin:
+- Admin dashboard.
+- Student management.
+- Attendance and marks management.
+- Data export.
+- Examination management.
+
+
+------------------------------------------------------------
+1.2 main.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+main.tsx is the entry point of the React frontend.
+
+It is responsible for rendering the React application
+inside the root HTML element.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Imports React.
+2. Imports the App component.
+3. Imports the global CSS file.
+4. Renders the App component.
+5. Connects React to the HTML root element.
+
+WORKING FLOW:
+-------------
+
+index.html
+    |
+    v
+main.tsx
+    |
+    v
+App.tsx
+    |
+    v
+Application Interface
+
+
+IMPORTANT:
+----------
+main.tsx starts the frontend application.
+
+Without this file, the React components would not be
+rendered inside the webpage.
+
+
+------------------------------------------------------------
+1.3 index.css
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Contains the global CSS styles used throughout the
+frontend application.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Defines global styling.
+2. Sets fonts and basic page appearance.
+3. Controls colors.
+4. Controls spacing and layout.
+5. Styles common HTML elements.
+6. Provides consistent styling across components.
+
+IMPORTANT:
+----------
+Global CSS styles can affect multiple components
+throughout the application.
+
+Individual components may also contain their own
+styling or use classes defined in this file.
+
+
+------------------------------------------------------------
+1.4 vite-env.d.ts
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Provides TypeScript declarations related to Vite.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Helps TypeScript recognize Vite-specific features.
+2. Provides type declarations for frontend development.
+3. Supports correct TypeScript checking in a Vite project.
+
+This file is generally a configuration-related file
+and is not responsible for displaying application pages.
+
+
+
+============================================================
+2. COMPONENTS FOLDER
+============================================================
+
+FOLDER:
+-------
+src/components/
+
+PURPOSE:
+--------
+Contains reusable React components.
+
+Reusable components are created once and used in
+different parts of the application.
+
+BENEFITS:
+---------
+1. Reduces repeated code.
+2. Makes the application easier to maintain.
+3. Improves consistency in the user interface.
+4. Makes individual components easier to test.
+5. Keeps the project organized.
+
+CURRENT SUBFOLDER:
+------------------
+components/layout/
+
+
+
+============================================================
+3. COMPONENTS/LAYOUT FOLDER
+============================================================
+
+FOLDER:
+-------
+src/components/layout/
+
+PURPOSE:
+--------
+Contains components used to create the common layout
+of the application.
+
+These components are shared across different pages
+and views.
+
+FILES:
+------
+1. Navbar.tsx
+2. Sidebar.tsx
+
+
+------------------------------------------------------------
+3.1 Navbar.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Creates the navigation bar of the application.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays the top navigation area.
+2. Shows application branding or information.
+3. Displays user-related information when required.
+4. Provides navigation-related controls.
+5. Helps maintain a consistent page layout.
+
+WHERE IT IS USED:
+-----------------
+The navbar can be used across different sections
+of the application.
+
+CONNECTED FEATURES:
+-------------------
+- User information.
+- Navigation.
+- Application layout.
+- Logout or profile-related controls,
+  depending on the implementation.
+
+
+------------------------------------------------------------
+3.2 Sidebar.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Creates the side navigation menu.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays navigation links.
+2. Allows users to move between application sections.
+3. Organizes student navigation items.
+4. Organizes admin navigation items.
+5. Helps maintain consistent navigation.
+6. Displays navigation options based on user access
+   or role when configured.
+
+EXAMPLES OF NAVIGATION ITEMS:
+-----------------------------
+Student:
+- Dashboard.
+- Profile.
+- Attendance.
+- Marks.
+- Timetable.
+- Results.
+- Announcements.
+- Events.
+
+Admin:
+- Dashboard.
+- Student Management.
+- Attendance and Marks.
+- Examinations.
+- Announcements.
+- Events.
+- Data Export.
+
+IMPORTANT:
+----------
+Sidebar.tsx focuses on navigation, while the individual
+view files contain the actual page functionality.
+
+
+
+============================================================
+4. CONTEXT FOLDER
+============================================================
+
+FOLDER:
+-------
+src/context/
+
+PURPOSE:
+--------
+Contains React Context files.
+
+React Context is used to share data between components
+without passing the same information manually through
+every component.
+
+FILE:
+-----
+AuthContext.tsx
+
+
+------------------------------------------------------------
+4.1 AuthContext.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Manages authentication-related information throughout
+the frontend application.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Stores information about the current user.
+2. Manages login state.
+3. Handles logout functionality.
+4. Provides user information to components.
+5. Helps control access to application views.
+6. Connects the frontend with the authentication API.
+7. Allows different components to access authentication
+   information.
+
+WHY CONTEXT IS USED:
+--------------------
+Several components may need information about the
+currently logged-in user.
+
+For example:
+
+- Navbar may display the user's name.
+- Sidebar may display role-based navigation.
+- Dashboard may need the user's ID.
+- Student pages may need the current student's details.
+
+Instead of passing user information manually through
+many components, AuthContext makes it available to
+the components that need it.
+
+AUTHENTICATION FLOW:
+--------------------
+
+LoginView.tsx
+      |
+      v
+AuthContext.tsx
+      |
+      v
+Backend auth.ts
+      |
+      v
+students.csv
+      |
+      v
+Authentication Response
+      |
+      v
+User information is stored
+      |
+      v
+Application views are displayed
+
+
+
+============================================================
+5. TYPES FOLDER
+============================================================
+
+FOLDER:
+-------
+src/types/
+
+PURPOSE:
+--------
+Contains TypeScript types and interfaces used by the
+frontend application.
+
+FILE:
+-----
+index.ts
+
+
+------------------------------------------------------------
+5.1 index.ts
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Defines the structure of data used throughout the frontend.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Defines TypeScript interfaces.
+2. Describes the structure of application data.
+3. Provides type safety.
+4. Reduces errors while handling API responses.
+5. Ensures consistency between components.
+6. Makes the code easier to understand and maintain.
+
+TYPES MAY INCLUDE:
+------------------
+- Student information.
+- Attendance data.
+- Marks.
+- Results.
+- Subjects.
+- Events.
+- Announcements.
+- Bus information.
+- Feedback.
+- Examination data.
+
+IMPORTANCE:
+-----------
+The frontend receives data from the backend.
+
+TypeScript types help ensure that the frontend
+accesses the expected properties correctly.
+
+For example, a student object may contain:
+
+- Student ID.
+- Name.
+- Email.
+- Department.
+- Semester.
+- Role.
+
+If a component tries to use a property that does not
+exist in the defined type, TypeScript may identify
+the issue during development.
+
+
+
+============================================================
+6. UTILS FOLDER
+============================================================
+
+FOLDER:
+-------
+src/utils/
+
+PURPOSE:
+--------
+Contains reusable helper information and utility
+configurations used by the frontend.
+
+FILES:
+------
+1. activityCategories.ts
+2. navigation.ts
+
+
+------------------------------------------------------------
+6.1 activityCategories.ts
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Contains activity category information.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Defines categories for student activities.
+2. Helps organize activity records.
+3. Provides reusable category values.
+4. Prevents repeated category definitions.
+5. Supports activity-related frontend components.
+
+WHERE IT IS USED:
+-----------------
+- Student activity view.
+- Admin activity approval or management view.
+
+IMPORTANCE:
+-----------
+Keeping categories in a separate utility file makes
+the application easier to update and maintain.
+
+
+------------------------------------------------------------
+6.2 navigation.ts
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Contains navigation-related configuration.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Defines navigation items.
+2. Stores navigation labels.
+3. Stores paths or navigation information.
+4. Helps organize sidebar links.
+5. Supports role-based navigation when implemented.
+6. Prevents navigation configuration from being repeated
+   across multiple components.
+
+WHERE IT IS USED:
+-----------------
+- Sidebar.tsx.
+- Student navigation.
+- Admin navigation.
+
+IMPORTANT:
+----------
+This file manages navigation-related information,
+while Sidebar.tsx is responsible for displaying
+the navigation interface.
+
+
+
+============================================================
+7. VIEWS FOLDER
+============================================================
+
+FOLDER:
+-------
+src/views/
+
+PURPOSE:
+--------
+Contains the main pages or screens of the application.
+
+The views folder is divided into:
+
+1. admin/
+2. auth/
+3. student/
+
+Each folder contains views for a particular user
+role or application section.
+
+STRUCTURE:
+----------
+
+views/
+|
+|-- admin/
+|
+|-- auth/
+|   |-- LoginView.tsx
+|
+|-- student/
+
+
+ADMIN:
+------
+Contains pages used by administrators.
+
+AUTH:
+-----
+Contains authentication-related pages.
+
+STUDENT:
+--------
+Contains pages used by students.
+
+
+
+============================================================
+8. AUTH FOLDER
+============================================================
+
+FOLDER:
+-------
+src/views/auth/
+
+PURPOSE:
+--------
+Contains authentication-related views.
+
+FILE:
+-----
+LoginView.tsx
+
+
+------------------------------------------------------------
+8.1 LoginView.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays the login page of the application.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays login fields.
+2. Accepts user credentials.
+3. Handles user input.
+4. Sends login details through AuthContext.
+5. Displays login errors.
+6. Handles successful authentication.
+7. Allows users to enter the application.
+
+CONNECTED FILES:
+----------------
+- AuthContext.tsx.
+- Backend routes/auth.ts.
+- students.csv.
+
+LOGIN FLOW:
+-----------
+
+User enters credentials
+          |
+          v
+LoginView.tsx
+          |
+          v
+AuthContext.tsx
+          |
+          v
+POST /login
+          |
+          v
+backend/routes/auth.ts
+          |
+          v
+students.csv
+          |
+          v
+Login response
+          |
+          v
+Student or admin application view
+
+
+
+============================================================
+9. ADMIN FOLDER
+============================================================
+
+FOLDER:
+-------
+src/views/admin/
+
+PURPOSE:
+--------
+Contains all views used by administrators.
+
+The admin section allows administrators to manage
+different types of college information.
+
+ADMIN FUNCTIONALITIES:
+----------------------
+1. Dashboard analytics.
+2. Student management.
+3. Attendance and marks management.
+4. Examination management.
+5. Timetable management.
+6. Announcement management.
+7. Event management.
+8. Bus management.
+9. Activity approvals.
+10. Feedback analytics.
+11. Data export.
+12. Results management.
+
+ADMIN FILES:
+------------
+
+1. AdminActivityApprovals.tsx
+2. AdminAnnouncements.tsx
+3. AdminAttendanceMarks.tsx
+4. AdminBusManagement.tsx
+5. AdminDashboard.tsx
+6. AdminEvents.tsx
+7. AdminExaminations.tsx
+8. AdminExportData.tsx
+9. AdminFeedbackAnalytics.tsx
+10. AdminRexaResults.tsx
+11. AdminTimetable.tsx
+12. StudentManagement.tsx
+
+
+
+------------------------------------------------------------
+9.1 AdminDashboard.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays the administrator dashboard.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays an overview of the application.
+2. Shows important statistics.
+3. Displays student-related information.
+4. Shows attendance or academic summaries.
+5. Displays recent activities or announcements.
+6. Provides a central starting point for administrators.
+
+CONNECTED BACKEND:
+------------------
+analytics.ts
+
+MAIN ENDPOINT:
+-------------
+GET /admin-dashboard
+
+DATA SOURCES MAY INCLUDE:
+-------------------------
+- students.csv
+- attendance.csv
+- marks.csv
+- activities.csv
+- examinations.csv
+- announcements.csv
+
+The dashboard combines information from different
+modules to give administrators a summarized view
+of the application.
+
+
+
+------------------------------------------------------------
+9.2 StudentManagement.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Allows administrators to manage student records.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays student information.
+2. Adds new students.
+3. Updates student details.
+4. Deletes students.
+5. Displays the student list.
+6. Supports student management operations.
+7. May provide searching or filtering functionality.
+
+CONNECTED BACKEND:
+------------------
+students.ts
+
+CSV FILE:
+---------
+students.csv
+
+MAIN OPERATIONS:
+----------------
+- Create student.
+- Read student records.
+- Update student.
+- Delete student.
+
+IMPORTANT:
+----------
+Deleting a student may also affect related records
+such as attendance, marks, activities, and results.
+
+
+
+------------------------------------------------------------
+9.3 AdminAttendanceMarks.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Manages attendance and marks from the admin side.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays attendance information.
+2. Adds attendance records.
+3. Manages marks.
+4. Adds marks records.
+5. Supports bulk data entry when implemented.
+6. Displays academic information.
+7. May support exporting attendance or marks data.
+
+CONNECTED BACKEND:
+------------------
+- attendance.ts
+- marks.ts
+
+CSV FILES:
+----------
+- attendance.csv
+- attendance_records.csv
+- marks.csv
+- subjects.csv
+
+This file combines attendance and marks management
+functionalities for administrators.
+
+
+
+------------------------------------------------------------
+9.4 AdminExaminations.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Manages examination-related information.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays examination details.
+2. Adds examination records.
+3. Updates examination details.
+4. Deletes examination records.
+5. Manages examination schedules.
+6. Displays examination-related information.
+
+CONNECTED BACKEND:
+------------------
+examinations.ts
+
+CSV FILES:
+----------
+- examinations.csv
+- exams.csv
+- students.csv
+
+The view allows administrators to manage examination
+information that is displayed to students.
+
+
+
+------------------------------------------------------------
+9.5 AdminAnnouncements.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Manages college announcements.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays existing announcements.
+2. Creates new announcements.
+3. Updates announcements.
+4. Deletes announcements.
+5. Publishes important information for students.
+
+CONNECTED BACKEND:
+------------------
+announcements.ts
+
+CSV FILE:
+---------
+announcements.csv
+
+The announcements created by the administrator can
+be displayed in the student announcements section.
+
+
+
+------------------------------------------------------------
+9.6 AdminEvents.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Manages college events.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays events.
+2. Creates new events.
+3. Updates event details.
+4. Deletes events.
+5. Manages event information.
+
+CONNECTED BACKEND:
+------------------
+events.ts
+
+CSV FILE:
+---------
+events.csv
+
+Event information may include:
+- Event name.
+- Date.
+- Venue.
+- Description.
+- Category.
+
+
+
+------------------------------------------------------------
+9.7 AdminBusManagement.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Manages college bus information.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays bus details.
+2. Adds new buses.
+3. Updates bus information.
+4. Deletes bus records.
+5. Manages bus-related data.
+
+CONNECTED BACKEND:
+------------------
+buses.ts
+
+CSV FILE:
+---------
+buses.csv
+
+The information managed here can be displayed
+in the student bus tracking or bus information view.
+
+
+
+------------------------------------------------------------
+9.8 AdminTimetable.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Manages the college timetable.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays timetable records.
+2. Adds timetable entries.
+3. Updates timetable entries.
+4. Deletes timetable entries.
+5. Manages class schedule information.
+
+CONNECTED BACKEND:
+------------------
+timetable.ts
+
+CSV FILE:
+---------
+timetable.csv
+
+TIMETABLE INFORMATION MAY INCLUDE:
+-----------------------------------
+- Day.
+- Time.
+- Subject.
+- Faculty.
+- Classroom.
+
+
+
+------------------------------------------------------------
+9.9 AdminActivityApprovals.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Handles student activity approval and management.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays student activity submissions.
+2. Allows administrators to review activities.
+3. Manages activity approval-related operations.
+4. Displays activity information.
+5. Updates activity records when required.
+
+CONNECTED BACKEND:
+------------------
+activities.ts
+
+CSV FILE:
+---------
+activities.csv
+
+This view is related to student activities and their
+management from the administrator side.
+
+
+
+------------------------------------------------------------
+9.10 AdminFeedbackAnalytics.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays and manages feedback-related information
+for administrators.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays submitted feedback.
+2. Helps administrators review feedback.
+3. Provides feedback-related information.
+4. Supports feedback analytics.
+5. May allow feedback export.
+
+CONNECTED BACKEND:
+------------------
+feedback.ts
+
+CSV FILE:
+---------
+feedback.csv
+
+The view helps administrators understand feedback
+submitted by users or students.
+
+
+
+------------------------------------------------------------
+9.11 AdminExportData.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Handles data export functionality for administrators.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Provides options to export data.
+2. Allows administrators to download records.
+3. Supports CSV-based reports.
+4. Helps retrieve information from different modules.
+5. Provides a way to use application data outside
+   the web interface.
+
+CONNECTED BACKEND:
+------------------
+Depending on the selected data, this view may use:
+
+- students.ts
+- attendance.ts
+- marks.ts
+- feedback.ts
+- results.ts
+
+EXPORTED DATA MAY INCLUDE:
+--------------------------
+- Student data.
+- Attendance data.
+- Marks.
+- Feedback.
+- Results.
+
+
+
+------------------------------------------------------------
+9.12 AdminRexaResults.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Handles the administration of REXA or end-semester
+academic result information.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays academic results.
+2. Imports result information.
+3. Validates result data.
+4. Manages result records.
+5. Deletes result records when required.
+6. Exports result information.
+7. Supports sample CSV downloading.
+
+CONNECTED BACKEND:
+------------------
+results.ts
+
+CSV FILE:
+---------
+end_semester_results.csv
+
+MAIN FUNCTIONALITIES:
+---------------------
+- Result validation.
+- Result import.
+- Result display.
+- Result deletion.
+- Result export.
+
+
+
+============================================================
+10. STUDENT FOLDER
+============================================================
+
+FOLDER:
+-------
+src/views/student/
+
+PURPOSE:
+--------
+Contains the views used by students.
+
+These views allow students to access their academic,
+personal, transport, event, and college-related information.
+
+STUDENT FILES:
+--------------
+
+1. StudentActivities.tsx
+2. StudentAnnouncements.tsx
+3. StudentAttendance.tsx
+4. StudentBusTracking.tsx
+5. StudentDashboard.tsx
+6. StudentEndSemesterResults.tsx
+7. StudentEvents.tsx
+8. StudentFeedback.tsx
+9. StudentHallTicket.tsx
+10. StudentMarks.tsx
+11. StudentProfile.tsx
+12. StudentTimetable.tsx
+
+
+
+------------------------------------------------------------
+10.1 StudentDashboard.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays the student's main dashboard.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays an overview of student information.
+2. Shows important academic details.
+3. Displays attendance summaries.
+4. Displays announcements.
+5. Shows upcoming events.
+6. Provides navigation to other student modules.
+
+CONNECTED BACKEND:
+------------------
+May use information from:
+- attendance.ts
+- marks.ts
+- announcements.ts
+- events.ts
+- students.ts
+- analytics.ts
+
+The dashboard acts as the main starting page
+for students after login.
+
+
+
+------------------------------------------------------------
+10.2 StudentProfile.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays the student's personal and academic profile.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays student name.
+2. Displays student ID.
+3. Displays department.
+4. Displays semester.
+5. Displays contact information.
+6. Displays other student-related details.
+
+CONNECTED BACKEND:
+------------------
+students.ts
+
+CSV FILE:
+---------
+students.csv
+
+The student profile uses the logged-in student's
+information to display the appropriate details.
+
+
+
+------------------------------------------------------------
+10.3 StudentAttendance.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays attendance information for the student.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays subject-wise attendance.
+2. Displays attendance percentage.
+3. Displays attendance status.
+4. Displays detailed attendance records.
+5. Helps students monitor their attendance.
+
+CONNECTED BACKEND:
+------------------
+attendance.ts
+
+CSV FILES:
+----------
+- attendance.csv
+- attendance_records.csv
+- subjects.csv
+
+The view retrieves attendance data using the student's ID.
+
+
+
+------------------------------------------------------------
+10.4 StudentMarks.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays the student's academic marks.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays subject-wise marks.
+2. Displays internal marks.
+3. Displays external marks.
+4. Displays total marks.
+5. Displays grades or academic performance.
+6. Retrieves marks for the logged-in student.
+
+CONNECTED BACKEND:
+------------------
+marks.ts
+
+CSV FILES:
+----------
+- marks.csv
+- subjects.csv
+
+The view uses student and subject information to
+display the correct marks.
+
+
+
+------------------------------------------------------------
+10.5 StudentEndSemesterResults.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays the student's end-semester results.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays semester results.
+2. Displays course-wise results.
+3. Displays grades.
+4. Displays academic year information.
+5. Retrieves results for the logged-in student.
+
+CONNECTED BACKEND:
+------------------
+results.ts
+
+CSV FILE:
+---------
+end_semester_results.csv
+
+This view focuses on final or end-semester academic
+result information.
+
+
+
+------------------------------------------------------------
+10.6 StudentHallTicket.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays examination hall ticket information.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves hall ticket details.
+2. Displays student examination information.
+3. Shows relevant examination details.
+4. Provides hall ticket information to the student.
+
+CONNECTED BACKEND:
+------------------
+examinations.ts
+
+MAIN ENDPOINT:
+-------------
+GET /hall-ticket/:uid
+
+CSV FILES:
+----------
+- examinations.csv
+- students.csv
+- exams.csv
+
+The student's UID is used to retrieve the relevant
+hall ticket information.
+
+
+
+------------------------------------------------------------
+10.7 StudentTimetable.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays the student's class timetable.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays classes by day.
+2. Displays subject timings.
+3. Displays classroom information.
+4. Displays timetable records.
+5. Helps students view their daily schedule.
+
+CONNECTED BACKEND:
+------------------
+timetable.ts
+
+CSV FILE:
+---------
+timetable.csv
+
+
+
+------------------------------------------------------------
+10.8 StudentAnnouncements.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays college announcements to students.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Retrieves announcements.
+2. Displays important notices.
+3. Shows announcement details.
+4. Helps students stay updated with college information.
+
+CONNECTED BACKEND:
+------------------
+announcements.ts
+
+CSV FILE:
+---------
+announcements.csv
+
+
+
+------------------------------------------------------------
+10.9 StudentEvents.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays college events to students.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays event names.
+2. Displays event dates.
+3. Displays event venues.
+4. Displays event descriptions.
+5. Helps students view upcoming events.
+
+CONNECTED BACKEND:
+------------------
+events.ts
+
+CSV FILE:
+---------
+events.csv
+
+
+
+------------------------------------------------------------
+10.10 StudentBusTracking.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays college bus information and tracking-related
+details.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays bus information.
+2. Displays bus routes.
+3. Displays bus numbers.
+4. Displays bus timings.
+5. Displays available transport information.
+6. Supports bus tracking-related functionality
+   when data is available.
+
+CONNECTED BACKEND:
+------------------
+buses.ts
+
+CSV FILE:
+---------
+buses.csv
+
+IMPORTANT:
+----------
+The exact tracking functionality depends on the data
+and logic implemented in the backend and frontend.
+
+
+
+------------------------------------------------------------
+10.11 StudentActivities.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Displays student activity information.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays student activities.
+2. Displays activity categories.
+3. Shows activity records.
+4. Helps students view their participation information.
+
+CONNECTED BACKEND:
+------------------
+activities.ts
+
+CSV FILE:
+---------
+activities.csv
+
+RELATED UTILITY:
+---------------
+activityCategories.ts
+
+
+
+------------------------------------------------------------
+10.12 StudentFeedback.tsx
+------------------------------------------------------------
+
+PURPOSE:
+--------
+Allows students to submit feedback.
+
+MAIN RESPONSIBILITIES:
+----------------------
+1. Displays a feedback form.
+2. Accepts feedback from students.
+3. Sends feedback to the backend.
+4. Displays submission status.
+5. Allows users to provide feedback about the application
+   or college-related services.
+
+CONNECTED BACKEND:
+------------------
+feedback.ts
+
+CSV FILE:
+---------
+feedback.csv
+
+
+
+============================================================
+11. CONNECTION BETWEEN FRONTEND AND BACKEND
+============================================================
+
+The files in the src folder communicate with the files
+in the backend folder through API requests.
+
+EXAMPLE 1: STUDENT ATTENDANCE
+-----------------------------
+
+Frontend:
+---------
+StudentAttendance.tsx
+
+Backend:
+--------
+attendance.ts
+
+Data:
+-----
+attendance.csv
+attendance_records.csv
+
+FLOW:
+-----
+
+Student opens attendance page
+          |
+          v
+StudentAttendance.tsx
+          |
+          v
+API request to attendance.ts
+          |
+          v
+Backend reads CSV data
+          |
+          v
+Attendance information is returned
+          |
+          v
+Frontend displays attendance
+
+
+EXAMPLE 2: STUDENT MARKS
+------------------------
+
+Frontend:
+---------
+StudentMarks.tsx
+
+Backend:
+--------
+marks.ts
+
+Data:
+-----
+marks.csv
+subjects.csv
+
+FLOW:
+-----
+
+Student opens marks page
+          |
+          v
+StudentMarks.tsx
+          |
+          v
+API request to marks.ts
+          |
+          v
+Backend retrieves marks
+          |
+          v
+Marks data is returned
+          |
+          v
+Frontend displays marks
+
+
+EXAMPLE 3: ADMIN STUDENT MANAGEMENT
+-----------------------------------
+
+Frontend:
+---------
+StudentManagement.tsx
+
+Backend:
+--------
+students.ts
+
+Data:
+-----
+students.csv
+
+FLOW:
+-----
+
+Admin enters student details
+          |
+          v
+StudentManagement.tsx
+          |
+          v
+POST request to students.ts
+          |
+          v
+Backend processes the data
+          |
+          v
+students.csv is updated
+          |
+          v
+Response is sent to frontend
+          |
+          v
+Student list is refreshed
+
+
+EXAMPLE 4: LOGIN
+----------------
+
+Frontend:
+---------
+LoginView.tsx
+AuthContext.tsx
+
+Backend:
+--------
+auth.ts
+
+Data:
+-----
+students.csv
+
+FLOW:
+-----
+
+User enters login credentials
+          |
+          v
+LoginView.tsx
+          |
+          v
+AuthContext.tsx
+          |
+          v
+auth.ts
+          |
+          v
+Credentials are checked
+          |
+          v
+Authentication response
+          |
+          v
+Student or admin view is displayed
+
+
+
+============================================================
+12. DIFFERENCE BETWEEN COMPONENTS, VIEWS,
+    CONTEXT, TYPES, AND UTILS
+============================================================
+
+COMPONENTS:
+-----------
+Reusable UI elements.
+
+Examples:
+- Navbar.tsx
+- Sidebar.tsx
+
+Purpose:
+- Build common parts of the interface.
+
+
+VIEWS:
+------
+Complete pages or screens of the application.
+
+Examples:
+- StudentDashboard.tsx
+- AdminDashboard.tsx
+- StudentMarks.tsx
+
+Purpose:
+- Display the functionality of a specific page.
+
+
+CONTEXT:
+--------
+Shared application state.
+
+Example:
+- AuthContext.tsx
+
+Purpose:
+- Manage authentication and share user information.
+
+
+TYPES:
+------
+TypeScript interfaces and data structures.
+
+Example:
+- src/types/index.ts
+
+Purpose:
+- Define the expected structure of data.
+
+
+UTILS:
+------
+Reusable helper configurations and functions.
+
+Examples:
+- navigation.ts
+- activityCategories.ts
+
+Purpose:
+- Store reusable information and helper logic.
+
+
+
+============================================================
+13. IMPORTANT POINTS FOR VIVA
+============================================================
+
+1. The src folder contains the frontend source code.
+
+2. The frontend is developed using React and TypeScript.
+
+3. App.tsx is the main application component.
+
+4. main.tsx is the entry point that renders the React app.
+
+5. index.css contains global styles.
+
+6. Components contain reusable UI elements.
+
+7. Navbar.tsx creates the navigation bar.
+
+8. Sidebar.tsx creates the side navigation menu.
+
+9. AuthContext.tsx manages authentication information.
+
+10. The types folder contains TypeScript types and interfaces.
+
+11. The utils folder contains reusable configuration
+    and helper information.
+
+12. The views folder contains the application's pages.
+
+13. The admin folder contains administrator views.
+
+14. The student folder contains student views.
+
+15. LoginView.tsx handles the login interface.
+
+16. StudentDashboard.tsx displays the student dashboard.
+
+17. AdminDashboard.tsx displays the admin dashboard.
+
+18. StudentAttendance.tsx displays student attendance.
+
+19. StudentMarks.tsx displays student marks.
+
+20. StudentEndSemesterResults.tsx displays semester results.
+
+21. StudentHallTicket.tsx displays hall ticket information.
+
+22. StudentBusTracking.tsx displays bus-related information.
+
+23. AdminExportData.tsx handles administrator data export.
+
+24. The frontend communicates with the backend through API
+    requests.
+
+25. The backend retrieves or modifies CSV data and sends
+    responses back to the frontend.
+
+26. Different views are connected to different backend
+    route files.
+
+27. React components are used to create a modular and
+    reusable user interface.
+
+
+
+============================================================
+14. COMPLETE SRC FOLDER SUMMARY
+============================================================
+
+ROOT FILES:
+-----------
+
+App.tsx:
+- Main React application component.
+
+main.tsx:
+- Entry point of the React application.
+
+index.css:
+- Global CSS styling.
+
+vite-env.d.ts:
+- Vite-related TypeScript declarations.
+
+
+COMPONENTS:
+-----------
+
+Navbar.tsx:
+- Displays the navigation bar.
+
+Sidebar.tsx:
+- Displays the side navigation menu.
+
+
+CONTEXT:
+--------
+
+AuthContext.tsx:
+- Manages authentication and current user information.
+
+
+TYPES:
+------
+
+index.ts:
+- Defines frontend TypeScript types and interfaces.
+
+
+UTILS:
+------
+
+activityCategories.ts:
+- Defines activity categories.
+
+navigation.ts:
+- Defines navigation-related information.
+
+
+AUTH VIEWS:
+-----------
+
+LoginView.tsx:
+- Handles the login interface.
+
+
+ADMIN VIEWS:
+------------
+
+AdminActivityApprovals.tsx:
+- Handles student activity approval and management.
+
+AdminAnnouncements.tsx:
+- Manages college announcements.
+
+AdminAttendanceMarks.tsx:
+- Manages attendance and marks.
+
+AdminBusManagement.tsx:
+- Manages college bus information.
+
+AdminDashboard.tsx:
+- Displays admin dashboard analytics.
+
+AdminEvents.tsx:
+- Manages college events.
+
+AdminExaminations.tsx:
+- Manages examinations and schedules.
+
+AdminExportData.tsx:
+- Handles data export functionality.
+
+AdminFeedbackAnalytics.tsx:
+- Displays and manages feedback analytics.
+
+AdminRexaResults.tsx:
+- Manages end-semester or REXA results.
+
+AdminTimetable.tsx:
+- Manages the timetable.
+
+StudentManagement.tsx:
+- Manages student records.
+
+
+STUDENT VIEWS:
+--------------
+
+StudentActivities.tsx:
+- Displays student activities.
+
+StudentAnnouncements.tsx:
+- Displays college announcements.
+
+StudentAttendance.tsx:
+- Displays student attendance.
+
+StudentBusTracking.tsx:
+- Displays bus information and tracking-related details.
+
+StudentDashboard.tsx:
+- Displays the student dashboard.
+
+StudentEndSemesterResults.tsx:
+- Displays end-semester results.
+
+StudentEvents.tsx:
+- Displays college events.
+
+StudentFeedback.tsx:
+- Allows students to submit feedback.
+
+StudentHallTicket.tsx:
+- Displays examination hall ticket information.
+
+StudentMarks.tsx:
+- Displays student marks.
+
+StudentProfile.tsx:
+- Displays student profile information.
+
+StudentTimetable.tsx:
+- Displays the student timetable.
+
+
+
+============================================================
+15. OVERALL SRC FOLDER WORKING
+============================================================
+
+The src folder is responsible for the complete frontend
+interface of RSET Connect.
+
+The user interacts with React components.
+The components display the appropriate views.
+The views send requests to the backend.
+The backend processes the requests and accesses CSV files.
+The response is sent back to the frontend.
+The frontend displays the updated information.
+
+FINAL FLOW:
+-----------
+
+User
+ |
+ v
+React Frontend
+ |
+ v
+Components and Views
+ |
+ v
+API Request
+ |
+ v
+Backend Routes
+ |
+ v
+CSV Service
+ |
+ v
+CSV Data
+ |
+ v
+API Response
+ |
+ v
+Frontend State Update
+ |
+ v
+Updated User Interface
